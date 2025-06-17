@@ -2,7 +2,10 @@
 <body>
     <th:block th:replace="~{fragments/fragments :: header}" />
     <main class="container my-3">
-        <h1>Videogames</h1>
+        <div class="d-flex align-items-center gap-3">
+            <h1>Videogames</h1>
+            <a th:href="@{/videogames/create}" class="btn btn-primary">Add Videogame</a>
+        </div>
         <h3>Ricerca:</h3>
         <form th:action="@{/videogames/search}" class="d-flex my-2">
             <input class="form-control rounded-end-0" type="text" id="title" name="title" placeholder="Cerca per titolo" th:value="${title}">

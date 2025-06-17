@@ -8,10 +8,17 @@ import org.final_project.java.progetto_finale_java.service.VideogameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.PostMapping;
+
 
 
 @Controller
@@ -44,5 +51,20 @@ public class VideogameController {
         return "videogames/index";
     }
     
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("videogame", new Videogame());
+        return "videogames/create-edit";
+    }
+    
+    @PostMapping("/create")
+    public String store(@Valid @ModelAttribute Videogame videogame, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "videogames/create-edit";
+        }
+
+        service.create(videogame);
+        return "redirect:/videogames";
+    }
     
 }
