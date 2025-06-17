@@ -1,9 +1,12 @@
 package org.final_project.java.progetto_finale_java.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
@@ -22,6 +25,9 @@ public class Platform {
 
     @NotBlank(message = "The icon's url cannot be null, empty or blank")
     private String iconUrl;
+
+    @ManyToMany(mappedBy = "platforms")
+    private List<Videogame> videogames;
 
     public Integer getId() {
         return this.id;
@@ -53,6 +59,14 @@ public class Platform {
 
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
+    }
+
+    public List<Videogame> getVideogames() {
+        return this.videogames;
+    }
+
+    public void setVideogames(List<Videogame> videogames) {
+        this.videogames = videogames;
     }
 
 }

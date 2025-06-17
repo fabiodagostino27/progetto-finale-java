@@ -1,10 +1,15 @@
 package org.final_project.java.progetto_finale_java.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
@@ -29,6 +34,14 @@ public class Videogame {
 
     @NotBlank(message = "The image's url cannot be null, empty or blank")
     private String imageUrl;
+
+    @ManyToMany
+    @JoinTable(
+        name = "platform_videogame",
+        joinColumns = @JoinColumn(name = "videogame_id"),
+        inverseJoinColumns = @JoinColumn(name = "platform_id")
+    )
+    private List<Platform> platforms;
 
     public Integer getId() {
         return this.id;
@@ -77,4 +90,14 @@ public class Videogame {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+
+    public List<Platform> getPlatforms() {
+        return this.platforms;
+    }
+
+    public void setPlatforms(List<Platform> platforms) {
+        this.platforms = platforms;
+    }
+
 }
