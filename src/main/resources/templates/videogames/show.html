@@ -1,0 +1,23 @@
+<th:block th:replace="~{fragments/fragments :: thymeleaf}" />
+<body>
+    <th:block th:replace="~{fragments/fragments :: header}" />
+    <main class="container my-3" th:object="${videogame}">
+        <h1 class="mb-4">[[*{title}]]</h1>
+        <div class="row">
+            <figure class="col-12 col-md-6 col-lg-4">
+                <img class="w-100" th:src="*{imageUrl}" alt="*{title}">
+            </figure>
+            <div class="col-12 col-md-6 col-lg-8">
+                <p th:if="*{description.length() > 0}"><strong>Description: </strong>[[*{description}]]</p>
+                <p th:unless="*{description.length() > 0}"><strong>Description: </strong>no description available for this item.</p>
+                <p><strong>Developer studio: </strong>[[*{developerStudio}]]</p>
+                <p><strong>Publisher: </strong>[[*{publisher}]]</p>
+                <p><strong>Available on: </strong></p>
+                <ul>
+                    <li th:each="platform : *{platforms}">[[${platform.name}]]</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

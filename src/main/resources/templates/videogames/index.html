@@ -1,0 +1,32 @@
+<th:block th:replace="~{fragments/fragments :: thymeleaf}" />
+<body>
+    <th:block th:replace="~{fragments/fragments :: header}" />
+    <main class="container my-3">
+        <h1>Videogames</h1>
+        <h3>Ricerca:</h3>
+        <form th:action="@{/videogames/search}" class="d-flex my-2">
+            <input class="form-control rounded-end-0" type="text" id="title" name="title" placeholder="Cerca per titolo" th:value="${title}">
+            <button class="btn btn-outline-primary rounded-start-0">Cerca</button>
+        </form>
+        <table class="table">
+            <thead>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Developer studio</th>
+                <th>Publisher</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                <tr th:each="videogame : ${videogames}" th:object="${videogame}">
+                    <td>[[*{title}]]</td>
+                    <td th:if="*{description.length() > 0}">[[*{description}]]</td>
+                    <td th:unless="*{description.length() > 0}">No available description for this item.</td>
+                    <td>[[*{developerStudio}]]</td>
+                    <td>[[*{publisher}]]</td>
+                    <td><a th:href="@{/videogames/{id}(id = *{id})}" class="btn btn-outline-primary">Details</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
