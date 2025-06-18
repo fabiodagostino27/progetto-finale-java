@@ -20,6 +20,13 @@
             </div>
 
             <div class="mb-3">
+                <div th:each="platform : ${platforms}">
+                    <input type="checkbox" th:id="${platform.name}" th:field="${videogame.platforms}" th:value="${platform.id}">
+                    <label class="form-label" th:for="${platform.name}">[[${platform.name}]]</label>
+                </div>
+            </div>
+
+            <div class="mb-3">
                 <label class="form-label" for="description">Description</label>
                 <textarea class="form-control" id="description" th:field="*{description}" th:errorClass="is-invalid" />
                 <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">

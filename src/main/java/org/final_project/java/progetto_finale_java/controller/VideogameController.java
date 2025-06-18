@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.final_project.java.progetto_finale_java.model.Videogame;
+import org.final_project.java.progetto_finale_java.service.PlatformService;
 import org.final_project.java.progetto_finale_java.service.VideogameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,17 +28,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/videogames")
 public class VideogameController {
     @Autowired
-    private VideogameService service;
+    private VideogameService videogameService;
+
+    @Autowired
+    private PlatformService platformService;
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("videogames", service.getAll());
+        model.addAttribute("videogames", videogameService.getAll());
         return "videogames/index";
     }
     
     @GetMapping("{id}")
     public String show(@PathVariable Integer id, Model model) {
-        Optional<Videogame> videogameAttempt = service.getById(id);
+        Optional<Videogame> videogameAttempt = videogameService.getById(id);
         if (videogameAttempt.isEmpty()) {
             return "notFound";
         }
@@ -48,7 +52,7 @@ public class VideogameController {
 
     @GetMapping("/search")
     public String search(@RequestParam String title, Model model) {
-        List<Videogame> videogames = service.getByTitle(title);
+        List<Videogame> videogames = videogameService.getByTitle(title);
         model.addAttribute("videogames", videogames);
         return "videogames/index";
     }
@@ -56,16 +60,18 @@ public class VideogameController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("videogame", new Videogame());
+        model.addAttribute("platforms", platformService.getAll());
         return "videogames/create-edit";
     }
     
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute Videogame videogame, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("platforms", platformService.getAll());
             return "videogames/create-edit";
         }
 
-        service.create(videogame);
+        videogameService.create(videogame);
         return "redirect:/videogames";
     }
 
@@ -73,23 +79,25 @@ public class VideogameController {
     public String edit(@PathVariable Integer id, Model model) {
         boolean edit = true;
         model.addAttribute("edit", edit);
-        model.addAttribute("videogame", service.getById(id).get());
+        model.addAttribute("platforms", platformService.getAll());
+        model.addAttribute("videogame", videogameService.getById(id).get());
         return "videogames/create-edit";
     }
     
     @PostMapping("/edit/{id}")
     public String update(@Valid @ModelAttribute Videogame videogame, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("platforms", platformService.getAll());
             return "videogames/create-edit";
         }
 
-        service.update(videogame);
+        videogameService.update(videogame);
         return "redirect:/videogames";
     }
     
     @PostMapping("/delete/{id}")
     public String postMethodName(@PathVariable Integer id) {
-        service.deleteById(id);
+        videogameService.deleteById(id);
         return "redirect:/videogames";
     }
     
