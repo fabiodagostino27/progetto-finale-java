@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 
+
+
 @Controller
 @RequestMapping("/videogames")
 public class VideogameController {
@@ -64,6 +66,30 @@ public class VideogameController {
         }
 
         service.create(videogame);
+        return "redirect:/videogames";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        boolean edit = true;
+        model.addAttribute("edit", edit);
+        model.addAttribute("videogame", service.getById(id).get());
+        return "videogames/create-edit";
+    }
+    
+    @PostMapping("/edit/{id}")
+    public String update(@Valid @ModelAttribute Videogame videogame, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "videogames/create-edit";
+        }
+
+        service.update(videogame);
+        return "redirect:/videogames";
+    }
+    
+    @PostMapping("/delete/{id}")
+    public String postMethodName(@PathVariable Integer id) {
+        service.deleteById(id);
         return "redirect:/videogames";
     }
     

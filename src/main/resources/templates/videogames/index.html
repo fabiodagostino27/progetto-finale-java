@@ -1,14 +1,16 @@
 <th:block th:replace="~{fragments/fragments :: thymeleaf}" />
+
 <body>
     <th:block th:replace="~{fragments/fragments :: header}" />
     <main class="container my-3">
         <div class="d-flex align-items-center gap-3">
             <h1>Videogames</h1>
-            <a th:href="@{/videogames/create}" class="btn btn-primary">Add Videogame</a>
+            <a th:href="@{/videogames/create}" class="btn btn-primary">+ Add Videogame</a>
         </div>
         <h3>Ricerca:</h3>
         <form th:action="@{/videogames/search}" class="d-flex my-2">
-            <input class="form-control rounded-end-0" type="text" id="title" name="title" placeholder="Cerca per titolo" th:value="${title}">
+            <input class="form-control rounded-end-0" type="text" id="title" name="title" placeholder="Cerca per titolo"
+                th:value="${title}">
             <button class="btn btn-outline-primary rounded-start-0">Cerca</button>
         </form>
         <table class="table">
@@ -18,18 +20,55 @@
                 <th>Developer studio</th>
                 <th>Publisher</th>
                 <th>Actions</th>
+                <th></th>
+                <th></th>
             </thead>
             <tbody>
                 <tr th:each="videogame : ${videogames}" th:object="${videogame}">
                     <td>[[*{title}]]</td>
                     <td th:if="*{description.length() > 0}">[[*{description}]]</td>
-                    <td th:unless="*{description.length() > 0}">No available description for this item.</td>
+                    <td th:unless="*{description.length() > 0}" class="fst-italic text-black-50">No available
+                        description for this item.</td>
                     <td>[[*{developerStudio}]]</td>
                     <td>[[*{publisher}]]</td>
                     <td><a th:href="@{/videogames/{id}(id = *{id})}" class="btn btn-outline-primary">Details</a></td>
+                    <td><a th:href="@{videogames/edit/{id}(id = *{id})}" class="btn btn-outline-warning">Edit</a></td>
+                    <td>
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            th:data-bs-target="${'#deleteModal-' + videogame.id}">
+                            Delete
+                        </button>
+
+                        <div class="modal fade" th:id="${'deleteModal-' + videogame.id}" tabindex="-1" th:aria-labelledby="${'deleteModal-' + videogame.id}"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Deleting: [[*{title}]]</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>This item will be deleted.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Back</button>
+                                        <form th:action="@{/videogames/delete/{id}(id=*{id})}"
+                                            th:method="POST">
+                                            <button class="btn btn-danger" type="submit">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </main>
+
+    <script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>
 </body>
+
 </html>

@@ -6,7 +6,7 @@
         <h1 th:if="${edit}">Editing: [[${videogame.title}]]</h1>
         <h1 th:unless="${edit}">Create new videogame</h1>
         <form th:object="${videogame}"
-            th:action="${edit} ? @{/videogames/edit/{id}(id = ${videogame.id}) : @{/videogames/create}}"
+            th:action="${edit} ? @{/videogames/edit/{id}(id = *{id})} : @{/videogames/create}"
             th:method="POST" class="my-3">
 
             <div class="mb-3">

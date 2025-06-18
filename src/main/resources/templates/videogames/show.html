@@ -9,7 +9,7 @@
             </figure>
             <div class="col-12 col-md-6 col-lg-8">
                 <p th:if="*{description.length() > 0}"><strong>Description: </strong>[[*{description}]]</p>
-                <p th:unless="*{description.length() > 0}"><strong>Description: </strong>no description available for this item.</p>
+                <p th:unless="*{description.length() > 0}"><strong>Description: </strong><span class="fst-italic text-black-50">no description available for this item.</span></p>
                 <p><strong>Developer studio: </strong>[[*{developerStudio}]]</p>
                 <p><strong>Publisher: </strong>[[*{publisher}]]</p>
                 <p><strong>Available on: </strong></p>
