@@ -1,12 +1,20 @@
 package org.final_project.java.progetto_finale_java.controller;
 
+import org.final_project.java.progetto_finale_java.model.Platform;
 import org.final_project.java.progetto_finale_java.service.PlatformService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller
@@ -19,6 +27,22 @@ public class PlatformController {
     public String index(Model model) {
         model.addAttribute("platforms", service.getAll());
         return "platforms/index";
+    }
+    
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("platform", new Platform());
+        return "platforms/create-edit";
+    }
+    
+    @PostMapping("/create")
+    public String store(@Valid @ModelAttribute Platform platform, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "platforms/create-edit";
+        }
+        
+        service.create(platform);
+        return "redirect:/platforms";
     }
     
 }
