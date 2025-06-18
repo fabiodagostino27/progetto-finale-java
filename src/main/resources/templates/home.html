@@ -1,9 +1,30 @@
 <th:block th:replace="~{fragments/fragments :: thymeleaf}" />
+
 <body>
     <th:block th:replace="~{fragments/fragments :: header}" />
     <main class="container my-3">
         <h1>Welcome to SlowGames backoffice!</h1>
-
+        <div class="row my-4">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Videogames section</h5>
+                        <p class="card-text">Add, edit or delete games in your database.</p>
+                        <a th:href="@{/videogames}" class="btn btn-primary">Click here</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Platforms section</h5>
+                        <p class="card-text">Add, edit or delete platforms in your database.</p>
+                        <a href="#" class="btn btn-primary">Click here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </body>
+
 </html>

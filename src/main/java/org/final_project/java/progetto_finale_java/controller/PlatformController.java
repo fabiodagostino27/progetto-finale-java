@@ -12,8 +12,10 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -44,5 +46,30 @@ public class PlatformController {
         service.create(platform);
         return "redirect:/platforms";
     }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        boolean edit = true;
+        model.addAttribute("platform", service.getById(id).get());
+        model.addAttribute("edit", edit);
+        return "platforms/create-edit";
+    }
+    
+    @PostMapping("/edit/{id}")
+    public String update(@Valid @ModelAttribute Platform platform, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "platforms/create-edit";
+        }
+        
+        service.update(platform);
+        return "redirect:/platforms";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        service.deleteById(id);
+        return "redirect:/platforms";
+    }
+    
     
 }

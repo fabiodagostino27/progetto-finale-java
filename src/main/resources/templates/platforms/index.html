@@ -21,13 +21,45 @@
                 <tr th:each="platform : ${platforms}" th:object="${platform}">
                     <td>[[*{name}]]</td>
                     <td>[[*{manufacturer}]]</td>
-                    <td th:unless="*{videogames.size() > 0}" class="fst-italic text-black-50">No available games for this platform.</td>
+                    <td th:unless="*{videogames.size() > 0}" class="fst-italic text-black-50">No available games for
+                        this platform.</td>
                     <td th:if="*{videogames.size() > 0}">
                         <th:block th:each="videogame, videogameStat : *{videogames}">
-                            <a th:href="@{/videogames/{id}(id = ${videogame.id})}">[[${videogame.title}]]</a>
-                            <span th:unless="${videogameStat.last}">, </span>
-                            <span th:if="${videogameStat.last}">.</span>
+                            <a th:href="@{/videogames/{id}(id = ${videogame.id})}">[[${videogame.title}]]</a><span
+                                th:unless="${videogameStat.last}">, </span>
                         </th:block>
+                    </td>
+                    <td>
+                        <a th:href="@{/platforms/edit/{id}(id = *{id})}" class="btn btn-outline-warning">Edit</a>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            th:data-bs-target="${'#deleteModal-' + platform.id}">
+                            Delete
+                        </button>
+
+                        <div class="modal fade" th:id="${'deleteModal-' + platform.id}" tabindex="-1"
+                            th:aria-labelledby="${'deleteModal-' + platform.id}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Deleting: [[*{name}]]</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>This item will be deleted.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Back</button>
+                                        <form th:action="@{/platforms/delete/{id}(id = *{id})}" th:method="POST">
+                                            <button class="btn btn-danger" type="submit">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
             </tbody>
         </table>
