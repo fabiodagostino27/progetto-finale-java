@@ -1,0 +1,71 @@
+<th:block th:replace="~{fragments/fragments :: thymeleaf}" />
+
+<body>
+    <th:block th:replace="~{fragments/fragments :: header}" />
+    <main class="container my-3">
+        <div class="d-flex align-items-center gap-3">
+            <h1>Platforms</h1>
+            <a th:href="@{/videogames/create}" class="btn btn-primary">+ Add Platform</a>
+        </div>
+        <h3>Ricerca:</h3>
+        <table class="table">
+            <thead>
+                <th>Name</th>
+                <th>Manufacturer</th>
+                <th>Linked videogames</th>
+                <th>Actions</th>
+                <th></th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr th:each="platform : ${platforms}" th:object="${platform}">
+                    <td>[[*{name}]]</td>
+                    <td>[[*{manufacturer}]]</td>
+                    <td th:unless="*{videogames.size() > 0}" class="fst-italic text-black-50">No available games for this platform.</td>
+                    <td th:if="*{videogames.size() > 0}">
+                        <th:block th:each="videogame, videogameStat : *{videogames}">
+                            <a th:href="@{/videogames/{id}(id = ${videogame.id})}">[[${videogame.title}]]</a>
+                            <span th:unless="${videogameStat.last}">, </span>
+                            <span th:if="${videogameStat.last}">.</span>
+                        </th:block>
+                    </td>
+                    <td><a th:href="@{videogames/edit/{id}(id = *{id})}" class="btn btn-outline-warning">Edit</a></td>
+                    <td>
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            th:data-bs-target="${'#deleteModal-' + videogame.id}">
+                            Delete
+                        </button>
+
+                        <div class="modal fade" th:id="${'deleteModal-' + videogame.id}" tabindex="-1" th:aria-labelledby="${'deleteModal-' + videogame.id}"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Deleting: [[*{title}]]</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>This item will be deleted.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Back</button>
+                                        <form th:action="@{/videogames/delete/{id}(id=*{id})}"
+                                            th:method="POST">
+                                            <button class="btn btn-danger" type="submit">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>
