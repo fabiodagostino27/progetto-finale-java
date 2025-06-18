@@ -1,0 +1,51 @@
+<th:block th:replace="~{fragments/fragments :: thymeleaf}" />
+
+<body>
+    <th:block th:replace="~{fragments/fragments :: header}" />
+    <main class="container my-3">
+        <h1 th:if="${edit}">Editing: [[${platform.name}]]</h1>
+        <h1 th:unless="${edit}">Create new platform</h1>
+        <form th:object="${platform}"
+            th:action="${edit} ? @{/platforms/edit/{id}(id = *{id})} : @{/platforms/create}"
+            th:method="POST" class="my-3">
+
+            <div class="mb-3">
+                <label class="form-label" for="name">Name</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="manufacturer">Manufacturer</label>
+                <input type="text" class="form-control" id="manufacturer" th:field="*{manufacturer}" th:errorClass="is-invalid" />
+                <div th:if="${#fields.hasErrors('manufacturer')}" class="invalid-feedback">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('manufacturer')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="iconUrl">Icon URL</label>
+                <input type="text" class="form-control" id="iconUrl" th:field="*{iconUrl}"
+                    th:errorClass="is-invalid" />
+                <div th:if="${#fields.hasErrors('iconUrl')}" class="invalid-feedback">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('iconUrl')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-warning" type="reset">Reset</button>
+                <button class="btn btn-primary" type="submit">Invio</button>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>
