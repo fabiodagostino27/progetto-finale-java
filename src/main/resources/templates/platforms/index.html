@@ -13,9 +13,8 @@
                 <th>Name</th>
                 <th>Manufacturer</th>
                 <th>Linked videogames</th>
-                <th>Actions</th>
-                <th></th>
-                <th></th>
+                <th sec:authorize="hasAuthority('ADMIN')">Actions</th>
+                <th sec:authorize="hasAuthority('ADMIN')"></th>
             </thead>
             <tbody>
                 <tr th:each="platform : ${platforms}" th:object="${platform}">
@@ -29,10 +28,10 @@
                                 th:unless="${videogameStat.last}">, </span>
                         </th:block>
                     </td>
-                    <td>
+                    <td sec:authorize="hasAuthority('ADMIN')">
                         <a th:href="@{/platforms/edit/{id}(id = *{id})}" class="btn btn-outline-warning">Edit</a>
                     </td>
-                    <th:block th:replace="~{fragments/fragments :: deleteModal(object=${platform}, endpoint='/platforms/delete/{id}', variable=*{name})}" />
+                    <th:block sec:authorize="hasAuthority('ADMIN')" th:replace="~{fragments/fragments :: deleteModal(object=${platform}, endpoint='/platforms/delete/{id}', variable=*{name})}" />
             </tbody>
         </table>
     </main>
