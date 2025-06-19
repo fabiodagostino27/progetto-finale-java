@@ -9,6 +9,7 @@
         <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
     </head>
 </th:block>
+
 <body>
     <header th:fragment="header">
         <nav class="navbar navbar-expand navbar-dark bg-dark p-3">
@@ -25,5 +26,34 @@
             </ul>
         </nav>
     </header>
+
+    <td th:fragment="deleteModal (object, endpoint, variable)">
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+            th:data-bs-target="${'#deleteModal-' + object.id}">
+            Delete
+        </button>
+
+        <div class="modal fade" th:id="${'deleteModal-' + object.id}" tabindex="-1"
+            th:aria-labelledby="${'deleteModal-' + object.id}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Deleting: [[${variable}]]</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>This item will be deleted.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                        <form th:action="@{${endpoint}(id = *{id})}" th:method="POST">
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
 </body>
+
 </html>
