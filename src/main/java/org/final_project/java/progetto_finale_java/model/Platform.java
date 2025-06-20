@@ -2,6 +2,8 @@ package org.final_project.java.progetto_finale_java.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,6 +29,7 @@ public class Platform {
     private String iconUrl;
 
     @ManyToMany(mappedBy = "platforms")
+    @JsonBackReference
     private List<Videogame> videogames;
 
     public Integer getId() {
