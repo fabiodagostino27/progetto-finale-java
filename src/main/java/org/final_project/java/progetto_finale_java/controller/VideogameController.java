@@ -42,9 +42,6 @@ public class VideogameController {
     @GetMapping("{id}")
     public String show(@PathVariable Integer id, Model model) {
         Optional<Videogame> videogameAttempt = videogameService.getById(id);
-        if (videogameAttempt.isEmpty()) {
-            return "notFound";
-        }
 
         model.addAttribute("videogame", videogameAttempt.get());
         return "videogames/show";

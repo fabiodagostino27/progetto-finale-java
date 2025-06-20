@@ -1,0 +1,16 @@
+<th:block th:replace="~{fragments/fragments :: thymeleaf}" />
+
+<body>
+    <th:block th:replace="~{fragments/fragments :: header}" />
+    <main class="container my-3 text-center">
+        <h1 class="mt-5 mb-3">Whoops! An error has occured!</h1>
+        <div th:if="${status}" class="error-details">
+            <p><strong>Status Code:</strong> <span th:text="${status}"></span></p>
+            <p><strong>Error:</strong> <span th:text="${error}"></span></p>
+            <p><strong>Message:</strong> <span th:text="${message}"></span></p>
+        </div>
+        <a th:href="@{/}" class="btn btn-dark">Home</a>
+    </main>
+</body>
+
+</html>
