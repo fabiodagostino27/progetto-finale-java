@@ -1,5 +1,7 @@
 package org.final_project.java.progetto_finale_java.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +25,22 @@ public class VideogameService {
 
     public List<Videogame> getByTitle(String title) {
         return repository.findByTitleContainingIgnoreCase(title);
+    }
+
+    public List<Videogame> getThreeRandom() {
+        List<Videogame> videogames = repository.findAll();
+
+        if (videogames.size() <= 3) {
+            return videogames;
+        }
+
+        Collections.shuffle(videogames);
+        List<Videogame> randomVideogames = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            randomVideogames.add(videogames.get(i));
+        }
+
+        return randomVideogames;
     }
 
     public Videogame create(Videogame videogame) {

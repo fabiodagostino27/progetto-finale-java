@@ -39,7 +39,7 @@ public class VideogameController {
         return "videogames/index";
     }
     
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public String show(@PathVariable Integer id, Model model) {
         Optional<Videogame> videogameAttempt = videogameService.getById(id);
 
