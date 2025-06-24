@@ -3,6 +3,7 @@ package org.final_project.java.progetto_finale_java.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.final_project.java.progetto_finale_java.model.Dlc;
 import org.final_project.java.progetto_finale_java.model.Platform;
 import org.final_project.java.progetto_finale_java.model.Videogame;
 
@@ -14,6 +15,7 @@ public class VideogameDTO {
     private String publisher;
     private String imageUrl;
     private List<PlatformDetailDTO> platforms = new ArrayList<>();
+    private List<Dlc> dlcs = new ArrayList<>();
 
     public VideogameDTO() {};
 
@@ -26,7 +28,11 @@ public class VideogameDTO {
         this.imageUrl = videogame.getImageUrl();
 
         for (Platform platform : videogame.getPlatforms()) {
-            platforms.add(new PlatformDetailDTO(platform));
+            this.platforms.add(new PlatformDetailDTO(platform));
+        }
+
+        for (Dlc dlc : videogame.getDlcs()) {
+            this.dlcs.add(dlc);
         }
     }
 
@@ -95,5 +101,13 @@ public class VideogameDTO {
 
     public void setPlatforms(List<PlatformDetailDTO> platforms) {
         this.platforms = platforms;
+    }
+
+    public List<Dlc> getDlcs() {
+        return this.dlcs;
+    }
+
+    public void setDlcs(List<Dlc> dlcs) {
+        this.dlcs = dlcs;
     }
 }

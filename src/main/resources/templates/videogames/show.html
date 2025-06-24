@@ -12,6 +12,10 @@
                 <p th:unless="*{description.length() > 0}"><strong>Description: </strong><span class="fst-italic text-black-50">no description available for this item.</span></p>
                 <p><strong>Developer studio: </strong>[[*{developerStudio}]]</p>
                 <p><strong>Publisher: </strong>[[*{publisher}]]</p>
+                <p><strong>Dlcs: </strong></p>
+                <ul>
+                    <li th:each="dlc : *{dlcs}">[[${dlc.title}]]</li>
+                </ul>
                 <p><strong>Available on: </strong></p>
                 <ul>
                     <li th:each="platform : *{platforms}">[[${platform.name}]]</li>

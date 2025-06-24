@@ -1,0 +1,42 @@
+<th:block th:replace="~{fragments/fragments :: thymeleaf}" />
+
+<body>
+    <th:block th:replace="~{fragments/fragments :: header}" />
+    <main class="container my-3">
+        <h1 th:if="${edit}">Editing: [[${dlc.title}]]</h1>
+        <h1 th:unless="${edit}">Create new dlc for videogame [[${dlc.getVideogame().getTitle()}]]</h1>
+        <form th:object="${dlc}"
+            th:action="${edit} ? @{/dlc/edit/{id}(id = *{id})} : @{/dlcs/create}"
+            th:method="POST" class="my-3">
+
+            <input type="hidden" th:field="*{videogame}">
+
+            <div class="mb-3">
+                <label class="form-label" for="title">Title</label>
+                <input type="text" class="form-control" id="title" th:field="*{title}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="imageUrl">Image URL</label>
+                <input type="text" class="form-control" id="imageUrl" th:field="*{imageUrl}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('imageUrl')}" class="invalid-feedback">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('imageUrl')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-warning" type="reset">Reset</button>
+                <button class="btn btn-primary" type="submit">Invio</button>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

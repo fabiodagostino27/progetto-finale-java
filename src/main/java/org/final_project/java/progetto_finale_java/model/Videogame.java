@@ -3,6 +3,7 @@ package org.final_project.java.progetto_finale_java.model;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -44,7 +45,7 @@ public class Videogame {
     )
     private List<Platform> platforms;
 
-    @OneToMany(mappedBy = "videogame")
+    @OneToMany(mappedBy = "videogame", fetch = FetchType.EAGER)
     private List<Dlc> dlcs;
 
     public Integer getId() {

@@ -1,5 +1,7 @@
 package org.final_project.java.progetto_finale_java.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +26,7 @@ public class Dlc {
 
     @ManyToOne
     @JoinColumn(name = "videogame_id", nullable = false)
+    @JsonBackReference
     private Videogame videogame;
 
     public Integer getId() {
@@ -48,5 +51,13 @@ public class Dlc {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Videogame getVideogame() {
+        return this.videogame;
+    }
+
+    public void setVideogame(Videogame videogame) {
+        this.videogame = videogame;
     }
 }
