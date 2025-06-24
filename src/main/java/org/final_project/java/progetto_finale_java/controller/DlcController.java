@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 
 
@@ -52,7 +49,7 @@ public class DlcController {
         boolean edit = true;
         model.addAttribute("edit", edit);
         model.addAttribute("dlc", dlcService.getById(id).get());
-        return "create-edit";
+        return "dlcs/create-edit";
     }
     
     @PostMapping("/edit/{id}")
@@ -67,7 +64,7 @@ public class DlcController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         Integer videogameId = dlcService.getById(id).get().getVideogame().getId();
-        dlcService.deleteById(videogameId);
+        dlcService.deleteById(id);
 
         return "redirect:/videogames/" + videogameId;
     }
