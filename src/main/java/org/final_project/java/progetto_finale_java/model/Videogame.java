@@ -104,4 +104,12 @@ public class Videogame {
         this.platforms = platforms;
     }
 
+    public List<Dlc> getDlcs() {
+        return this.dlcs;
+    }
+
+    public void setDlcs(List<Dlc> dlcs) {
+        this.dlcs = dlcs;
+    }
+
 }

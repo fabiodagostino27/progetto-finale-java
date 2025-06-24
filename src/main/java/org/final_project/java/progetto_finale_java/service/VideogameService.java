@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.final_project.java.progetto_finale_java.model.Dlc;
 import org.final_project.java.progetto_finale_java.model.Videogame;
 import org.final_project.java.progetto_finale_java.repo.VideogameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ import org.springframework.stereotype.Service;
 public class VideogameService {
     @Autowired
     private VideogameRepository repository;
+
+    @Autowired
+    private DlcService dlcService;
 
     public List<Videogame> getAll() {
         return repository.findAll();
@@ -56,6 +60,10 @@ public class VideogameService {
     }
 
     public void deleteById(Integer id) {
+        for (Dlc dlc : repository.findById(id).get().getDlcs()) {
+            dlcService.delete(dlc);
+        }
+
         repository.deleteById(id);
     }
 }
