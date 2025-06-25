@@ -12,7 +12,7 @@
             <thead>
                 <th>Name</th>
                 <th>Manufacturer</th>
-                <th>Linked videogames</th>
+                <th class="d-none d-md-table-cell">Linked videogames</th>
                 <th sec:authorize="hasAuthority('ADMIN')">Actions</th>
                 <th sec:authorize="hasAuthority('ADMIN')"></th>
             </thead>
@@ -20,20 +20,28 @@
                 <tr th:each="platform : ${platforms}" th:object="${platform}">
                     <td>[[*{name}]]</td>
                     <td>[[*{manufacturer}]]</td>
-                    <td th:unless="*{videogames.size() > 0}" class="fst-italic text-black-50">No available games for
+                    <td th:unless="*{videogames.size() > 0}" class="fst-italic text-black-50 d-none d-md-table-cell">No
+                        available games for
                         this platform.</td>
-                    <td th:if="*{videogames.size() > 0}">
+                    <td class="d-none d-md-table-cell" th:if="*{videogames.size() > 0}">
                         <th:block th:each="videogame, videogameStat : *{videogames}">
                             <a th:href="@{/videogames/{id}(id = ${videogame.id})}">[[${videogame.title}]]</a><span
                                 th:unless="${videogameStat.last}">, </span>
                         </th:block>
                     </td>
                     <td sec:authorize="hasAuthority('ADMIN')">
-                        <a th:href="@{/platforms/edit/{id}(id = *{id})}" class="btn btn-outline-warning">Edit</a>
+                        <a th:href="@{/platforms/edit/{id}(id = *{id})}" class="btn btn-outline-warning"><i
+                                class="fa-solid fa-pen"></i></a>
                     </td>
-                    <th:block sec:authorize="hasAuthority('ADMIN')" th:replace="~{fragments/fragments :: deleteModal(object=${platform}, endpoint='/platforms/delete/{id}', variable=*{name})}" />
+                    <th:block sec:authorize="hasAuthority('ADMIN')"
+                        th:replace="~{fragments/fragments :: deleteModal(object=${platform}, endpoint='/platforms/delete/{id}', variable=*{name})}" />
             </tbody>
         </table>
+        
+        <div class="text-center mt-2">
+            <a class="btn btn-dark me-2" th:href="@{/videogames}">Go to Videogames</a>
+            <a class="btn btn-dark" th:href="@{/platforms}">Go to Platforms</a>
+        </div>
     </main>
 
     <script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>

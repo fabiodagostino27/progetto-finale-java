@@ -5,7 +5,8 @@
     <main class="container my-3">
         <div class="d-flex align-items-center gap-3">
             <h1>Videogames</h1>
-            <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/videogames/create}" class="btn btn-primary">+ Add Videogame</a>
+            <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/videogames/create}" class="btn btn-primary">+ Add
+                Videogame</a>
         </div>
         <h3>Ricerca:</h3>
         <form th:action="@{/videogames/search}" class="d-flex my-2">
@@ -16,9 +17,9 @@
         <table class="table">
             <thead>
                 <th>Title</th>
-                <th>Description</th>
-                <th>Developer studio</th>
-                <th>Publisher</th>
+                <th class="d-none d-md-table-cell">Description</th>
+                <th class="d-none d-sm-table-cell">Developer studio</th>
+                <th class="d-none d-md-table-cell">Publisher</th>
                 <th>Actions</th>
                 <th sec:authorize="hasAuthority('ADMIN')"></th>
                 <th sec:authorize="hasAuthority('ADMIN')"></th>
@@ -26,17 +27,25 @@
             <tbody>
                 <tr th:each="videogame : ${videogames}" th:object="${videogame}">
                     <td>[[*{title}]]</td>
-                    <td th:if="*{description.length() > 0}">[[*{description}]]</td>
-                    <td th:unless="*{description.length() > 0}" class="fst-italic text-black-50">No available
+                    <td class="d-none d-md-table-cell" th:if="*{description.length() > 0}">[[*{description}]]</td>
+                    <td th:unless="*{description.length() > 0}" class="fst-italic text-black-50 d-none d-md-table-cell">
+                        No available
                         description for this item.</td>
-                    <td>[[*{developerStudio}]]</td>
-                    <td>[[*{publisher}]]</td>
+                    <td class="d-none d-sm-table-cell">[[*{developerStudio}]]</td>
+                    <td class="d-none d-md-table-cell">[[*{publisher}]]</td>
                     <td><a th:href="@{/videogames/{id}(id = *{id})}" class="btn btn-outline-primary">Details</a></td>
-                    <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{videogames/edit/{id}(id = *{id})}" class="btn btn-outline-warning">Edit</a></td>
-                    <th:block sec:authorize="hasAuthority('ADMIN')" th:replace="~{fragments/fragments :: deleteModal(object=${videogame}, endpoint='/videogames/delete/{id}', variable=*{title})}" />
+                    <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{videogames/edit/{id}(id = *{id})}"
+                            class="btn btn-outline-warning"><i class="fa-solid fa-pen"></i></a></td>
+                    <th:block sec:authorize="hasAuthority('ADMIN')"
+                        th:replace="~{fragments/fragments :: deleteModal(object=${videogame}, endpoint='/videogames/delete/{id}', variable=*{title})}" />
                 </tr>
             </tbody>
         </table>
+
+        <div class="text-center mt-2">
+            <a class="btn btn-dark me-2" th:href="@{/videogames}">Go to Videogames</a>
+            <a class="btn btn-dark" th:href="@{/platforms}">Go to Platforms</a>
+        </div>
     </main>
 
     <script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>

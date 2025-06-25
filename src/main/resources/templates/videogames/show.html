@@ -12,19 +12,23 @@
                 <p th:unless="*{description.length() > 0}"><strong>Description: </strong><span class="fst-italic text-black-50">no description available for this item.</span></p>
                 <p><strong>Developer studio: </strong>[[*{developerStudio}]]</p>
                 <p><strong>Publisher: </strong>[[*{publisher}]]</p>
-                <p><strong>Dlcs: </strong><a class="btn btn-primary" th:href="@{/dlcs/create/{id}(id = *{id})}">+ Add DLC</a></p>
-                <ul>
-                    <li th:each="dlc : *{dlcs}" th:object="${dlc}">
+                <p class="d-flex align-items-center gap-3 mb-0"><strong>Dlcs: </strong><a sec:authorize="hasAuthority('ADMIN')" class="btn btn-primary" th:href="@{/dlcs/create/{id}(id = *{id})}">+ Add DLC</a></p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" th:each="dlc : *{dlcs}" th:object="${dlc}">
                         [[*{title}]]
-                        <a class="btn btn-warning" th:href="@{/dlcs/edit/{id}(id = *{id})}">Edit</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-warning ms-2" th:href="@{/dlcs/edit/{id}(id = *{id})}">Edit</a>
                         <th:block sec:authorize="hasAuthority('ADMIN')" th:replace="~{fragments/fragments :: deleteModal(object=${dlc}, endpoint='/dlcs/delete/{id}', variable=*{title})}" />
                     </li>
                 </ul>
                 <p><strong>Available on: </strong></p>
-                <ul>
-                    <li th:each="platform : *{platforms}">[[${platform.name}]]</li>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" th:each="platform : *{platforms}">[[${platform.name}]]</li>
                 </ul>
             </div>
+        </div>
+        <div class="text-center mt-2">
+            <a class="btn btn-dark me-2" th:href="@{/videogames}">Go to Videogames</a>
+            <a class="btn btn-dark" th:href="@{/platforms}">Go to Platforms</a>
         </div>
     </main>
 

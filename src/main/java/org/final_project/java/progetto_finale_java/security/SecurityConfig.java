@@ -22,6 +22,8 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.POST, "/videogames/**").hasAuthority("ADMIN")
             .requestMatchers("/platforms/create", "platforms/edit/**").hasAuthority("ADMIN")
             .requestMatchers(HttpMethod.POST, "/platforms/**").hasAuthority("ADMIN")
+            .requestMatchers("/dlcs/create", "dlcs/create/**","dlcs/edit/**").hasAuthority("ADMIN")
+            .requestMatchers(HttpMethod.POST, "/dlcs/**").hasAuthority("ADMIN")
             .requestMatchers("/api/**").permitAll()
             .requestMatchers("/**").hasAnyAuthority("USER", "ADMIN")
             .and().formLogin()
