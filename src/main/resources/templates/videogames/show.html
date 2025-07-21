@@ -16,7 +16,7 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item" th:each="dlc : *{dlcs}" th:object="${dlc}">
                         [[*{title}]]
-                        <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-warning ms-2" th:href="@{/dlcs/edit/{id}(id = *{id})}">Edit</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-warning ms-2" th:href="@{/dlcs/edit/{id}(id = *{id})}"><i class="fa-solid fa-pen"></i></a>
                         <th:block sec:authorize="hasAuthority('ADMIN')" th:replace="~{fragments/fragments :: deleteModal(object=${dlc}, endpoint='/dlcs/delete/{id}', variable=*{title})}" />
                     </li>
                 </ul>

@@ -32,7 +32,7 @@ public class VideogameRestController {
 
     @GetMapping("/search")
     public List<VideogameDTO> search(@RequestParam String title) {
-        List<Videogame> videogames = service.getByTitle(title);
+        List<Videogame> videogames = service.getByTitle(title.trim());
         return VideogameDTO.fromEntityToList(videogames);
     }
 

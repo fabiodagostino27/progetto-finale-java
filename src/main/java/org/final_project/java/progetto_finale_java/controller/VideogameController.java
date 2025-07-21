@@ -49,7 +49,7 @@ public class VideogameController {
 
     @GetMapping("/search")
     public String search(@RequestParam String title, Model model) {
-        List<Videogame> videogames = videogameService.getByTitle(title);
+        List<Videogame> videogames = videogameService.getByTitle(title.trim());
         model.addAttribute("videogames", videogames);
         return "videogames/index";
     }
